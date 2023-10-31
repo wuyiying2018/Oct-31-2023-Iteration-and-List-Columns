@@ -34,8 +34,8 @@ l
     ## [1]  TRUE FALSE
     ## 
     ## $summary
-    ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-    ## -3.879362 -0.609084 -0.000516  0.032548  0.717970  3.260565
+    ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+    ## -3.71601 -0.62936  0.02287  0.02012  0.65328  3.10208
 
 accessing lists
 
@@ -72,3 +72,73 @@ is.list(list_norms)
 ```
 
     ## [1] TRUE
+
+write function
+
+``` r
+mean_and_sd = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Cannot be computed for length 1 vectors")
+  }
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+
+  tibble(
+    mean = mean_x, 
+    sd = sd_x
+  )
+}
+```
+
+apply the mean_and_sd function to each element of list_norms using the
+lines below.
+
+``` r
+mean_and_sd(list_norms[[1]])
+```
+
+    ## # A tibble: 1 × 2
+    ##    mean    sd
+    ##   <dbl> <dbl>
+    ## 1  2.89  1.08
+
+``` r
+mean_and_sd(list_norms[[2]])
+```
+
+    ## # A tibble: 1 × 2
+    ##     mean    sd
+    ##    <dbl> <dbl>
+    ## 1 -0.256  5.78
+
+``` r
+mean_and_sd(list_norms[[3]])
+```
+
+    ## # A tibble: 1 × 2
+    ##    mean    sd
+    ##   <dbl> <dbl>
+    ## 1  10.1 0.206
+
+``` r
+mean_and_sd(list_norms[[4]])
+```
+
+    ## # A tibble: 1 × 2
+    ##    mean    sd
+    ##   <dbl> <dbl>
+    ## 1 -2.86  1.17
+
+a for loop
+
+``` r
+output = vector("list", length = 4)
+
+for (i in 1:4) {
+  output[[i]] = mean_and_sd(list_norms[[i]])
+}
+```

@@ -48,3 +48,41 @@ list_norms =
 is.list(list_norms)
 ```
 
+write function
+```{r}
+mean_and_sd = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Cannot be computed for length 1 vectors")
+  }
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+
+  tibble(
+    mean = mean_x, 
+    sd = sd_x
+  )
+}
+```
+
+apply the mean_and_sd function to each element of list_norms using the lines below.
+
+```{r}
+mean_and_sd(list_norms[[1]])
+mean_and_sd(list_norms[[2]])
+mean_and_sd(list_norms[[3]])
+mean_and_sd(list_norms[[4]])
+```
+
+a for loop 
+```{r}
+output = vector("list", length = 4)
+
+for (i in 1:4) {
+  output[[i]] = mean_and_sd(list_norms[[i]])
+}
+```
+
