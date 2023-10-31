@@ -101,3 +101,98 @@ for (i in 1:4) {
 output = map(list_norms, median)
 ```
 
+## create dataframe
+```{r}
+listcol_df = 
+  tibble(
+    name = c("a", "b", "c", "d"),
+    samp = list_norms
+  )
+```
+
+pull name col, pull samp col
+```{r}
+listcol_df |> pull(name)
+listcol_df |> pull(samp)
+```
+
+apply mean_and_sd to the first element of our list column.
+```{r}
+mean_and_sd(listcol_df$samp[[1]])
+```
+
+apply mean_and_sd function to each element using map.
+```{r}
+map(listcol_df$samp, mean_and_sd)
+```
+
+using mutate to define a new variable in a data frame
+```{r}
+listcol_df = 
+  listcol_df |> 
+  mutate(summary = map(samp, mean_and_sd))
+
+listcol_df
+```
+
+## Revisiting NSDUH
+```{r}
+nsduh_table <- function(html, table_num) {
+  
+  table = 
+    html |> 
+    html_table() |> 
+    nth(table_num) |>
+    slice(-1) |> 
+    select(-contains("P Value")) |>
+    pivot_longer(
+      -State,
+      names_to = "age_year", 
+      values_to = "percent") |>
+    separate(age_year, into = c("age", "year"), sep = "\\(") |>
+    mutate(
+      year = str_replace(year, "\\)", ""),
+      percent = str_replace(percent, "[a-c]$", ""),
+      percent = as.numeric(percent)) |>
+    filter(!(State %in% c("Total U.S.", "Northeast", "Midwest", "South", "West")))
+  
+  table
+}
+```
+
+use this function to import three tables using the next code chunk, which downloads and extracts the page HTML and then iterates over table numbers. The results are combined using bind_rows(). Note that, because this version of our function doesn’t include table_name, that information is lost for now.
+```{r}
+nsduh_url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+
+nsduh_html = read_html(nsduh_url)
+
+output = vector("list", 3)
+
+for (i in c(1, 4, 5)) {
+  output[[i]] = nsduh_table(nsduh_html, i)
+}
+
+nsduh_results = bind_rows(output)
+```
+
+We can also import these data using map(). Here I’m supplying the html argument after the name of the function that I’m iterating over.
+```{r}
+nsduh_results = 
+  map(c(1, 4, 5), nsduh_table, html = nsduh_html) |> 
+  bind_rows()
+```
+
+As with previous examples, using a for loop is pretty okay but the map call is clearer.
+
+We can also do this using data frames and list columns.
+
+```{r}
+nsduh_results= 
+  tibble(
+    name = c("marj", "cocaine", "heroine"),
+    number = c(1, 4, 5)) |> 
+  mutate(table = map(number, \(num) nsduh_table(html = nsduh_html, num))) |> 
+  unnest(cols = "table")
+
+```
+
