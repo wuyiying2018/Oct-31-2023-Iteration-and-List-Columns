@@ -35,7 +35,7 @@ l
     ## 
     ## $summary
     ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-    ## -3.71601 -0.62936  0.02287  0.02012  0.65328  3.10208
+    ## -3.46096 -0.63804 -0.02970 -0.01299  0.68280  2.88133
 
 accessing lists
 
@@ -104,16 +104,16 @@ mean_and_sd(list_norms[[1]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  2.89  1.08
+    ## 1  3.10  1.06
 
 ``` r
 mean_and_sd(list_norms[[2]])
 ```
 
     ## # A tibble: 1 × 2
-    ##     mean    sd
-    ##    <dbl> <dbl>
-    ## 1 -0.256  5.78
+    ##    mean    sd
+    ##   <dbl> <dbl>
+    ## 1 -2.77  3.89
 
 ``` r
 mean_and_sd(list_norms[[3]])
@@ -122,7 +122,7 @@ mean_and_sd(list_norms[[3]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  10.1 0.206
+    ## 1  9.98 0.173
 
 ``` r
 mean_and_sd(list_norms[[4]])
@@ -131,7 +131,7 @@ mean_and_sd(list_norms[[4]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1 -2.86  1.17
+    ## 1 -2.72  1.02
 
 a for loop
 
@@ -141,4 +141,20 @@ output = vector("list", length = 4)
 for (i in 1:4) {
   output[[i]] = mean_and_sd(list_norms[[i]])
 }
+```
+
+## use `map`
+
+``` r
+output = map(list_norms, mean_and_sd)
+```
+
+``` r
+output = vector("list", length = 4)
+
+for (i in 1:4) {
+  output[[i]] = median(list_norms[[i]])
+}
+
+output = map(list_norms, median)
 ```

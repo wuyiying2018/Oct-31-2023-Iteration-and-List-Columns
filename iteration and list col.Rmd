@@ -86,3 +86,18 @@ for (i in 1:4) {
 }
 ```
 
+## use `map`
+```{r}
+output = map(list_norms, mean_and_sd)
+```
+
+```{r}
+output = vector("list", length = 4)
+
+for (i in 1:4) {
+  output[[i]] = median(list_norms[[i]])
+}
+
+output = map(list_norms, median)
+```
+
