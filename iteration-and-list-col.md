@@ -34,8 +34,8 @@ l
     ## [1]  TRUE FALSE
     ## 
     ## $summary
-    ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-    ## -2.970239 -0.649691  0.013026  0.002396  0.671716  2.823985
+    ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+    ## -2.96230 -0.69099 -0.02166 -0.01828  0.68344  2.96003
 
 accessing lists
 
@@ -104,7 +104,7 @@ mean_and_sd(list_norms[[1]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  2.74  1.12
+    ## 1  2.98  1.14
 
 ``` r
 mean_and_sd(list_norms[[2]])
@@ -113,7 +113,7 @@ mean_and_sd(list_norms[[2]])
     ## # A tibble: 1 × 2
     ##     mean    sd
     ##    <dbl> <dbl>
-    ## 1 0.0780  4.56
+    ## 1 0.0166  4.90
 
 ``` r
 mean_and_sd(list_norms[[3]])
@@ -122,7 +122,7 @@ mean_and_sd(list_norms[[3]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  10.1 0.195
+    ## 1  10.0 0.112
 
 ``` r
 mean_and_sd(list_norms[[4]])
@@ -131,7 +131,7 @@ mean_and_sd(list_norms[[4]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1 -2.86 0.798
+    ## 1 -2.77  1.28
 
 a for loop
 
@@ -182,25 +182,26 @@ listcol_df |> pull(samp)
 ```
 
     ## $a
-    ##  [1] 0.8161857 3.5368248 4.2731213 0.9074579 3.3901861 1.5532885 3.0883152
-    ##  [8] 4.4103126 4.0068994 2.5742637 2.5665076 2.2095686 2.2828811 2.3632318
-    ## [15] 3.7638788 3.2597847 1.3354703 1.8831821 4.2680895 2.2511981
+    ##  [1] 1.457755 2.842504 3.278035 2.917615 1.491463 2.492542 2.980524 4.169153
+    ##  [9] 3.528406 3.501685 4.613711 2.447766 3.114715 2.806791 2.862923 2.345173
+    ## [17] 2.749246 1.388548 2.255523 6.369038
     ## 
     ## $b
-    ##  [1]  2.8494021  5.2987099 -4.7769445  0.5180710  7.9752042 -5.2848057
-    ##  [7] -0.9879004 -2.9636070  1.4051456  4.8251367 -3.7693300 -7.0295014
-    ## [13]  2.4209455  4.9733109 -2.7995237  3.3318268 -8.4915350  2.6460554
-    ## [19] -2.1040061  3.5240038
+    ##  [1] -2.7371239 -7.8373321  2.4575585  7.1461463  2.7266626  5.4687207
+    ##  [7] -2.2384104 -1.5714692  0.8373027 -4.6775654  8.1108493 -4.5063596
+    ## [13] -1.8321483 -6.3653905  1.3272934  3.3916233  9.4351992 -2.1404264
+    ## [19] -1.9059718 -4.7566122
     ## 
     ## $c
-    ##  [1] 10.324316 10.266169 10.058938  9.660162 10.078031 10.010004 10.133266
-    ##  [8] 10.011320 10.130280 10.007533  9.965896 10.043360 10.345411 10.035235
-    ## [15] 10.009058  9.813120 10.460346  9.799476  9.857985 10.136525
+    ##  [1]  9.924277 10.101778  9.954078 10.009658  9.746143 10.037675 10.094613
+    ##  [8] 10.104802 10.098906 10.005357 10.047292 10.014361 10.046073 10.032607
+    ## [15]  9.956851 10.065683 10.077772  9.936271  9.746564 10.196570
     ## 
     ## $d
-    ##  [1] -2.631023 -3.199504 -4.700160 -2.082669 -3.655905 -3.208587 -3.407313
-    ##  [8] -3.569867 -1.225540 -1.878173 -2.878194 -2.278294 -2.164327 -2.398859
-    ## [15] -2.085479 -2.885594 -2.830078 -3.780577 -3.370674 -2.882198
+    ##  [1] -2.3121748 -3.3504368 -0.3526355 -3.7008701 -3.9873711 -4.0954979
+    ##  [7] -3.3149541 -1.9749491 -2.0491513 -3.3087994 -3.8671621 -2.4199617
+    ## [13] -4.6681084 -2.7205257 -1.9264500 -1.4983815 -3.7982668 -3.3465465
+    ## [19] -3.1872904  0.3996384
 
 apply mean_and_sd to the first element of our list column.
 
@@ -211,7 +212,7 @@ mean_and_sd(listcol_df$samp[[1]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  2.74  1.12
+    ## 1  2.98  1.14
 
 apply mean_and_sd function to each element using map.
 
@@ -223,25 +224,25 @@ map(listcol_df$samp, mean_and_sd)
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  2.74  1.12
+    ## 1  2.98  1.14
     ## 
     ## $b
     ## # A tibble: 1 × 2
     ##     mean    sd
     ##    <dbl> <dbl>
-    ## 1 0.0780  4.56
+    ## 1 0.0166  4.90
     ## 
     ## $c
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  10.1 0.195
+    ## 1  10.0 0.112
     ## 
     ## $d
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1 -2.86 0.798
+    ## 1 -2.77  1.28
 
 using mutate to define a new variable in a data frame
 
@@ -329,3 +330,279 @@ nsduh_results=
   mutate(table = map(number, \(num) nsduh_table(html = nsduh_html, num))) |> 
   unnest(cols = "table")
 ```
+
+## Operations on nested data
+
+revisit the weather data from visualization and elsewhere; these data
+consist of one year of observations from three monitoring stations. The
+code below pulls these data into R (using the rnoaa package, which
+interacts with the NOAA API).
+
+``` r
+weather_df = 
+  rnoaa::meteo_pull_monitors(
+    c("USW00094728", "USW00022534", "USS0023B17S"),
+    var = c("PRCP", "TMIN", "TMAX"), 
+    date_min = "2021-01-01",
+    date_max = "2022-12-31") |>
+  mutate(
+    name = recode(
+      id, 
+      USW00094728 = "CentralPark_NY", 
+      USW00022534 = "Molokai_HI",
+      USS0023B17S = "Waterhole_WA"),
+    tmin = tmin / 10,
+    tmax = tmax / 10) |>
+  select(name, id, everything())
+```
+
+    ## Registered S3 method overwritten by 'hoardr':
+    ##   method           from
+    ##   print.cache_info httr
+
+    ## using cached file: /Users/yiyingwu/Library/Caches/org.R-project.R/R/rnoaa/noaa_ghcnd/USW00094728.dly
+
+    ## date created (size, mb): 2023-09-28 10:20:05 (8.524)
+
+    ## file min/max dates: 1869-01-01 / 2023-09-30
+
+    ## using cached file: /Users/yiyingwu/Library/Caches/org.R-project.R/R/rnoaa/noaa_ghcnd/USW00022534.dly
+
+    ## date created (size, mb): 2023-09-28 10:20:09 (3.83)
+
+    ## file min/max dates: 1949-10-01 / 2023-09-30
+
+    ## using cached file: /Users/yiyingwu/Library/Caches/org.R-project.R/R/rnoaa/noaa_ghcnd/USS0023B17S.dly
+
+    ## date created (size, mb): 2023-09-28 10:20:11 (0.994)
+
+    ## file min/max dates: 1999-09-01 / 2023-09-30
+
+The station name and id are constant across the year’s temperature and
+precipitation data. For that reason, we can reorganize these data into a
+new data frame with a single row for each station. Weather data will be
+separated into three station-specific data frames, each of which is the
+data “observation” for the respective station.
+
+``` r
+weather_nest = 
+  nest(weather_df, data = date:tmin)
+
+weather_nest
+```
+
+    ## # A tibble: 3 × 3
+    ##   name           id          data              
+    ##   <chr>          <chr>       <list>            
+    ## 1 CentralPark_NY USW00094728 <tibble [730 × 4]>
+    ## 2 Molokai_HI     USW00022534 <tibble [730 × 4]>
+    ## 3 Waterhole_WA   USS0023B17S <tibble [730 × 4]>
+
+This is a different way of producing a list column. The result is a lot
+like listcol_df, in that the columns in weather_nest are a vector and a
+list.
+
+``` r
+weather_nest |> pull(name)
+```
+
+    ## [1] "CentralPark_NY" "Molokai_HI"     "Waterhole_WA"
+
+``` r
+weather_nest |> pull(data)
+```
+
+    ## [[1]]
+    ## # A tibble: 730 × 4
+    ##    date        prcp  tmax  tmin
+    ##    <date>     <dbl> <dbl> <dbl>
+    ##  1 2021-01-01   157   4.4   0.6
+    ##  2 2021-01-02    13  10.6   2.2
+    ##  3 2021-01-03    56   3.3   1.1
+    ##  4 2021-01-04     5   6.1   1.7
+    ##  5 2021-01-05     0   5.6   2.2
+    ##  6 2021-01-06     0   5     1.1
+    ##  7 2021-01-07     0   5    -1  
+    ##  8 2021-01-08     0   2.8  -2.7
+    ##  9 2021-01-09     0   2.8  -4.3
+    ## 10 2021-01-10     0   5    -1.6
+    ## # ℹ 720 more rows
+    ## 
+    ## [[2]]
+    ## # A tibble: 730 × 4
+    ##    date        prcp  tmax  tmin
+    ##    <date>     <dbl> <dbl> <dbl>
+    ##  1 2021-01-01     0  27.8  22.2
+    ##  2 2021-01-02     0  28.3  23.9
+    ##  3 2021-01-03     0  28.3  23.3
+    ##  4 2021-01-04     0  30    18.9
+    ##  5 2021-01-05     0  28.9  21.7
+    ##  6 2021-01-06     0  27.8  20  
+    ##  7 2021-01-07     0  29.4  21.7
+    ##  8 2021-01-08     0  28.3  18.3
+    ##  9 2021-01-09     0  27.8  18.9
+    ## 10 2021-01-10     0  28.3  18.9
+    ## # ℹ 720 more rows
+    ## 
+    ## [[3]]
+    ## # A tibble: 730 × 4
+    ##    date        prcp  tmax  tmin
+    ##    <date>     <dbl> <dbl> <dbl>
+    ##  1 2021-01-01   254   3.2   0  
+    ##  2 2021-01-02   152   0.9  -3.2
+    ##  3 2021-01-03     0   0.2  -4.2
+    ##  4 2021-01-04   559   0.9  -3.2
+    ##  5 2021-01-05    25   0.5  -3.3
+    ##  6 2021-01-06    51   0.8  -4.8
+    ##  7 2021-01-07     0   0.2  -5.8
+    ##  8 2021-01-08    25   0.5  -8.3
+    ##  9 2021-01-09     0   0.1  -7.7
+    ## 10 2021-01-10   203   0.9  -0.1
+    ## # ℹ 720 more rows
+
+Of course, if you can nest data you should be able to unnest it as well,
+and you can (with the caveat that you’re unnesting a list column that
+contains a data frame).
+
+``` r
+unnest(weather_nest, cols = data)
+```
+
+    ## # A tibble: 2,190 × 6
+    ##    name           id          date        prcp  tmax  tmin
+    ##    <chr>          <chr>       <date>     <dbl> <dbl> <dbl>
+    ##  1 CentralPark_NY USW00094728 2021-01-01   157   4.4   0.6
+    ##  2 CentralPark_NY USW00094728 2021-01-02    13  10.6   2.2
+    ##  3 CentralPark_NY USW00094728 2021-01-03    56   3.3   1.1
+    ##  4 CentralPark_NY USW00094728 2021-01-04     5   6.1   1.7
+    ##  5 CentralPark_NY USW00094728 2021-01-05     0   5.6   2.2
+    ##  6 CentralPark_NY USW00094728 2021-01-06     0   5     1.1
+    ##  7 CentralPark_NY USW00094728 2021-01-07     0   5    -1  
+    ##  8 CentralPark_NY USW00094728 2021-01-08     0   2.8  -2.7
+    ##  9 CentralPark_NY USW00094728 2021-01-09     0   2.8  -4.3
+    ## 10 CentralPark_NY USW00094728 2021-01-10     0   5    -1.6
+    ## # ℹ 2,180 more rows
+
+Nesting columns can help with data organization and comprehension by
+masking complexity you’re less concerned about right now and clarifying
+the things you are concerned about. In the weather data, it can be
+helpful to think of stations as the basic unit of observation, and daily
+weather recordings as a more granular level of observation. Nesting can
+also simplify the use of analytic approaches across levels of a higher
+variable.
+
+Suppose we want to fit the simple linear regression relating tmax to
+tmin for each station-specific data frame. First I’ll write a quick
+function that takes a data frame as the sole argument to fit this model.
+
+``` r
+weather_lm = function(df) {
+  lm(tmax ~ tmin, data = df)
+}
+```
+
+Let’s make sure this works on a single data frame.
+
+``` r
+weather_lm(weather_nest$data[[1]])
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = tmax ~ tmin, data = df)
+    ## 
+    ## Coefficients:
+    ## (Intercept)         tmin  
+    ##       7.514        1.034
+
+Since weather\$data is a list, we can apply our weather_lm function to
+each data frame using map.
+
+``` r
+map(weather_nest$data, weather_lm)
+```
+
+    ## [[1]]
+    ## 
+    ## Call:
+    ## lm(formula = tmax ~ tmin, data = df)
+    ## 
+    ## Coefficients:
+    ## (Intercept)         tmin  
+    ##       7.514        1.034  
+    ## 
+    ## 
+    ## [[2]]
+    ## 
+    ## Call:
+    ## lm(formula = tmax ~ tmin, data = df)
+    ## 
+    ## Coefficients:
+    ## (Intercept)         tmin  
+    ##     21.7547       0.3222  
+    ## 
+    ## 
+    ## [[3]]
+    ## 
+    ## Call:
+    ## lm(formula = tmax ~ tmin, data = df)
+    ## 
+    ## Coefficients:
+    ## (Intercept)         tmin  
+    ##       7.532        1.137
+
+As an aside, you can avoid the creation of a dedicated function using
+map’s syntax for “anonymous” (i.e. not named and saved) functions. This
+is fine for really short operations, but I typically write a dedicated
+function instead of using this option.
+
+``` r
+map(weather_nest$data, \(df) lm(tmax ~ tmin, data = df))
+```
+
+    ## [[1]]
+    ## 
+    ## Call:
+    ## lm(formula = tmax ~ tmin, data = df)
+    ## 
+    ## Coefficients:
+    ## (Intercept)         tmin  
+    ##       7.514        1.034  
+    ## 
+    ## 
+    ## [[2]]
+    ## 
+    ## Call:
+    ## lm(formula = tmax ~ tmin, data = df)
+    ## 
+    ## Coefficients:
+    ## (Intercept)         tmin  
+    ##     21.7547       0.3222  
+    ## 
+    ## 
+    ## [[3]]
+    ## 
+    ## Call:
+    ## lm(formula = tmax ~ tmin, data = df)
+    ## 
+    ## Coefficients:
+    ## (Intercept)         tmin  
+    ##       7.532        1.137
+
+Let’s use mutate to fit this model, and to store the result in the same
+dataframe.
+
+``` r
+weather_nest = 
+  weather_nest |> 
+  mutate(models = map(data, weather_lm))
+
+weather_nest
+```
+
+    ## # A tibble: 3 × 4
+    ##   name           id          data               models
+    ##   <chr>          <chr>       <list>             <list>
+    ## 1 CentralPark_NY USW00094728 <tibble [730 × 4]> <lm>  
+    ## 2 Molokai_HI     USW00022534 <tibble [730 × 4]> <lm>  
+    ## 3 Waterhole_WA   USS0023B17S <tibble [730 × 4]> <lm>

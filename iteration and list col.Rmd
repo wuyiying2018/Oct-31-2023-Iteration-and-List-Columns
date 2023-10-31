@@ -196,3 +196,77 @@ nsduh_results=
 
 ```
 
+## Operations on nested data
+revisit the weather data from visualization and elsewhere; these data consist of one year of observations from three monitoring stations. The code below pulls these data into R (using the rnoaa package, which interacts with the NOAA API).
+```{r}
+weather_df = 
+  rnoaa::meteo_pull_monitors(
+    c("USW00094728", "USW00022534", "USS0023B17S"),
+    var = c("PRCP", "TMIN", "TMAX"), 
+    date_min = "2021-01-01",
+    date_max = "2022-12-31") |>
+  mutate(
+    name = recode(
+      id, 
+      USW00094728 = "CentralPark_NY", 
+      USW00022534 = "Molokai_HI",
+      USS0023B17S = "Waterhole_WA"),
+    tmin = tmin / 10,
+    tmax = tmax / 10) |>
+  select(name, id, everything())
+```
+
+The station name and id are constant across the year’s temperature and precipitation data. For that reason, we can reorganize these data into a new data frame with a single row for each station. Weather data will be separated into three station-specific data frames, each of which is the data “observation” for the respective station.
+```{r}
+weather_nest = 
+  nest(weather_df, data = date:tmin)
+
+weather_nest
+```
+
+This is a different way of producing a list column. The result is a lot like listcol_df, in that the columns in weather_nest are a vector and a list.
+```{r}
+weather_nest |> pull(name)
+weather_nest |> pull(data)
+```
+
+Of course, if you can nest data you should be able to unnest it as well, and you can (with the caveat that you’re unnesting a list column that contains a data frame).
+
+```{r}
+unnest(weather_nest, cols = data)
+```
+
+Nesting columns can help with data organization and comprehension by masking complexity you’re less concerned about right now and clarifying the things you are concerned about. In the weather data, it can be helpful to think of stations as the basic unit of observation, and daily weather recordings as a more granular level of observation. Nesting can also simplify the use of analytic approaches across levels of a higher variable.
+
+Suppose we want to fit the simple linear regression relating tmax to tmin for each station-specific data frame. First I’ll write a quick function that takes a data frame as the sole argument to fit this model.
+```{r}
+weather_lm = function(df) {
+  lm(tmax ~ tmin, data = df)
+}
+```
+
+Let’s make sure this works on a single data frame.
+```{r}
+weather_lm(weather_nest$data[[1]])
+```
+
+Since weather$data is a list, we can apply our weather_lm function to each data frame using map.
+```{r}
+map(weather_nest$data, weather_lm)
+```
+
+As an aside, you can avoid the creation of a dedicated function using map’s syntax for “anonymous” (i.e. not named and saved) functions. This is fine for really short operations, but I typically write a dedicated function instead of using this option.
+```{r}
+map(weather_nest$data, \(df) lm(tmax ~ tmin, data = df))
+```
+
+Let’s use mutate to fit this model, and to store the result in the same dataframe.
+
+```{r}
+weather_nest = 
+  weather_nest |> 
+  mutate(models = map(data, weather_lm))
+
+weather_nest
+```
+
